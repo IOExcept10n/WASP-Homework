@@ -57,10 +57,10 @@ namespace Test1.Homework
             int day = 0;
             for (int height = 0; height < H;)
             {
+                day++;
                 height += A;
                 if (height >= H) break;
                 height -= B;
-                day++;
             }
             Console.WriteLine(day);
         }
