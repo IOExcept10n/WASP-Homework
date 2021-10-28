@@ -8,7 +8,7 @@ namespace Test1.Homework
 {
     class HomeworkCollections
     {
-        public static void Main(string[] args)
+        /*public static void Main(string[] args)
         {
             //Я правильно понял, что раз в задаче не указано о "неправильном" вводе, его не надо обрабатывать?
             Console.WriteLine("Task 1 - single elements.");
@@ -79,7 +79,7 @@ namespace Test1.Homework
             }
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(result);
-        }
+        }*/
 
         static bool DoTask(Func<int[], int[]> someAction)
         {

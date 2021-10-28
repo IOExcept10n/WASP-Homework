@@ -9,7 +9,7 @@ namespace Test1.Homework
 {
     class HomeworkArrays
     {
-        public static void Main(string[] args)
+        /*public static void Main(string[] args)
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;//Делаю, чтобы формат ввода и вывода вещественных чисел не допускал разделительной запятой, а делал вместо этого точку.
             //Задача 1.
@@ -49,7 +49,7 @@ namespace Test1.Homework
             Console.WriteLine("Задание 7: Нахождение средних значений в массивах.");
             Task3(out array1, out array2);
             Task7(array1, array2);
-        }
+        }*/
 
         public static void Task1()
         {
