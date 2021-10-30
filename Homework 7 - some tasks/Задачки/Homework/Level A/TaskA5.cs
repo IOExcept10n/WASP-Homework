@@ -16,23 +16,20 @@ namespace Homework
     // Пример:
     // ArrayOfTiers(420) ==> [4, 42, 420]
     // ArrayOfTiers(2021) ==> [2, 20, 202, 2021]
-    [TestClass]
     public static class TaskA5
     {
         public static List<int> ArrayOfTiers(int number)
         {
             // Здесь необходимо написать код.
-
-            return null;
+            List<int> answer = new List<int>();
+            string text = "";
+            string toProc = number.ToString();
+            for (int i = 0; i < toProc.Length; i++)
+            {
+                text += toProc[i];
+                answer.Add(int.Parse(text));
+            }
+            return answer;
         }
-
-        [TestMethod]
-        public static void Test1() => CollectionAssert.AreEqual(new List<int>() { 4, 42, 420 }, Homework.TaskA5.ArrayOfTiers(420), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => CollectionAssert.AreEqual(new List<int>() { 2, 20, 202, 2021 }, Homework.TaskA5.ArrayOfTiers(2021), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test3() => CollectionAssert.AreEqual(new List<int>() { 8, 80, 802, 8020, 80200 }, Homework.TaskA5.ArrayOfTiers(80200), "TEST ERROR");
     }
 }

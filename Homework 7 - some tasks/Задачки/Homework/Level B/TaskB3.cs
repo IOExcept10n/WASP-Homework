@@ -18,20 +18,26 @@ namespace Homework
     // decrypt('$aaaa#bbb*cc^fff!z') ==> '43200300000000000000000001'
     //           ^    ^   ^  ^  ^         ^^^  ^                   ^
     //          [4]  [3] [2][3][1]        abc  f                   z
-    [TestClass]
     public static class TaskB3
     {
         public static string Decrypt(string key)
         {
             // Здесь необходимо написать код.
-
-            return "";
+            Dictionary<char, int> toRet = new Dictionary<char, int>();
+            for (int i = 'a'; i < 'z' + 1; i++)
+            {
+                toRet.Add((char)i, 0);
+            }
+            foreach (char c in key)
+            {
+                if (toRet.ContainsKey(c)) toRet[c]++;
+            }
+            string answer = "";
+            foreach (var c in toRet)
+            {
+                answer += c.Value;
+            }
+            return answer;
         }
-
-        [TestMethod]
-        public static void Test1() => Assert.AreEqual("43200300000000000000000001", Homework.TaskB3.Decrypt("$aaaa#bbb*ccfff!z"), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => Assert.AreEqual("30303000000000000000000001", Homework.TaskB3.Decrypt("z$aaa#ccc%eee1234567890"), "TEST ERROR");
     }
 }

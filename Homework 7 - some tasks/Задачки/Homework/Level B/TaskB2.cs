@@ -17,14 +17,21 @@ namespace Homework
     // Пример:
     // [56, 65, 74, 100, 99, 68, 86, 180, 90] ==>
     // [100, 180, 90, 56, 65, 74, 68, 86, 99]
-    [TestClass]
     public static class TaskB2
     {
         public static List<int> OrderWeight(List<int> list)
         {
             // Здесь необходимо написать код.
+            list.Sort(CompareNumbers);
+            return list;
+        }
 
-            return null;
+        public static int CompareNumbers(int n1, int n2)//Создаю функцию для сравнения, чтобы затем использовать её в списке.
+        {
+            int d1 = TaskA2.SumOfDigits(n1);
+            int d2 = TaskA2.SumOfDigits(n2);
+            if (d1 == d2) return string.Compare(n1.ToString(), n2.ToString());
+            else return d1 - d2;
         }
 
         [TestMethod]

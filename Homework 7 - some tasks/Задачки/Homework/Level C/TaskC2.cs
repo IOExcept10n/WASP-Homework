@@ -18,29 +18,21 @@ namespace Homework
     // 
     // Пример:
     // ChangeCent(56) ==> [1,1,0,2] --> 1 * 1 + 1 * 5 + 0 * 10 + 2 * 25.
-    [TestClass]
     public static class TaskC2
     {
         public static List<int> ChangeCent(double money)
         {
             // Здесь необходимо написать код.
-
-            return null;
+            int rMoney = (int)money;//Здесь будет остаток денег.
+            List<int> coins = new List<int>() { 0, 0, 0, 0 };
+            coins[3] += rMoney / 25;
+            rMoney %= 25;
+            coins[2] += rMoney / 10;
+            rMoney %= 10;
+            coins[1] += rMoney / 5;
+            rMoney %= 5;
+            coins[0] += rMoney;
+            return coins;
         }
-
-        [TestMethod]
-        public static void Test1() => CollectionAssert.AreEqual(new List<int>() { 4, 0, 0, 1 }, Homework.TaskC2.ChangeCent(29), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => CollectionAssert.AreEqual(new List<int>() { 1, 1, 1, 3 }, Homework.TaskC2.ChangeCent(91), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test3() => CollectionAssert.AreEqual(new List<int>() { 0, 0, 0, 0 }, Homework.TaskC2.ChangeCent(0), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test4() => CollectionAssert.AreEqual(new List<int>() { 2, 1, 2, 4 }, Homework.TaskC2.ChangeCent(127), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test5() => CollectionAssert.AreEqual(new List<int>() { 3, 0, 0, 0 }, Homework.TaskC2.ChangeCent(3.9), "TEST ERROR");
     }
 }

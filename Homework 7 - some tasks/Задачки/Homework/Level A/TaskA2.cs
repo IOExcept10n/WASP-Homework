@@ -16,30 +16,28 @@ namespace Homework
     //
     // Примеры:
     // VeryEven(88) => false -> 8 + 8 = 16 -> 1 + 6 = 7 => 7 - нечетное;
-    // VeryEven(222) => true -> 2 + 2 + 2 = 8 => 8 - четное.
-    [TestClass]
+    // VeryEven(222) => true -> 2 + 2 + 2 = 8 => 8 - четное
     public static class TaskA2
     {
         public static bool VeryEven(int number)
         {
             // Здесь необходимо написать код.
-
-            return false;
+            if (number > 0 && number < 10) return number % 2 == 0;//Возвращаем true, если число однозначное и чётное
+            return VeryEven(SumOfDigits(number));
         }
-
-        [TestMethod]
-        public static void Test1() => Assert.IsTrue(Homework.TaskA2.VeryEven(4), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => Assert.IsFalse(Homework.TaskA2.VeryEven(5), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test3() => Assert.IsFalse(Homework.TaskA2.VeryEven(12), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test4() => Assert.IsFalse(Homework.TaskA2.VeryEven(1234), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test5() => Assert.IsTrue(Homework.TaskA2.VeryEven(7897), "TEST ERROR");
+        /// <summary>
+        /// Т.к. сумму чисел нужно считать в нескольких заданиях, я решил вынести её подсчёт в отдельную функцию.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public static int SumOfDigits(int num)
+        {
+            int sumOfDigits = 0;
+            for (int i = 1; i <= num; i *= 10)
+            {
+                sumOfDigits += num % (i * 10) / i;
+            }
+            return sumOfDigits;
+        }
     }
 }

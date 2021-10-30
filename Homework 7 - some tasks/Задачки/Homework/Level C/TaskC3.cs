@@ -21,20 +21,19 @@ namespace Homework
     // Цена трех походов в кино:
     // Система А: 15 * 3 = 45
     // Система B: 500 + 15 * 0.9 + 15 * 0.9 * 0.9 + 15 * 0.9 * 0.9 * 0.9 = 536.58....
-    [TestClass]
     public static class TaskC3
     {
         public static int Movie(int card, int ticket, double perc)
         {
             // Здесь необходимо написать код.
-
-            return 0;
+            int days = 1;
+            double dCard = card;
+            while (ticket * days < dCard + ticket * Math.Pow(perc, days))
+            {
+                dCard += ticket * Math.Pow(perc, days);
+                days++;
+            }
+            return days;
         }
-
-        [TestMethod]
-        public static void Test1() => Assert.AreEqual(43, Homework.TaskC3.Movie(500, 15, 0.9), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => Assert.AreEqual(24, Homework.TaskC3.Movie(100, 10, 0.95), "TEST ERROR");
     }
 }

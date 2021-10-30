@@ -20,22 +20,29 @@ namespace Homework
     // + a      +
     // + frame  +
     // ++++++++++
-    [TestClass]
     public static class TaskB5
     {
         public static string Frame(List<string> text, char symbol)
         {
             // Здесь необходимо написать код.
-
-            return "";
+            text = text.ConvertAll(x => " " + x + " ");//Это нужно, чтобы от красивой рамочки до текста были дополнительные пробелы.
+            int height = text.Count + 2;//Высота - число строк + 2 рамки
+            int width = text.Max(x => x.Length) + 2;//Ширина - наибольшая длина подстроки + 2 рамки
+            string answer = "";
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (x == 0 || x == width - 1 || y == 0 || y == height - 1) answer += symbol;//Добавляем рамку, если находимся на границе.
+                    else
+                    {
+                        if (x - 1 < text[y - 1].Length) answer += text[y - 1][x - 1];//Порядок именно такой из-за того, что у нас список строк. В нём сначала идёт номер строки, а потом номер символа.
+                        else answer += ' ';//Добавляем пробел, если строка закончилась, но не является наибольшей.
+                    }
+                }
+                answer += '\n';
+            }
+            return answer.Trim('\n');
         }
-
-        [TestMethod]
-        public static void Test1() => Assert.AreEqual("~~~~~~~~~\n~ Small ~\n~ text  ~\n~ frame ~\n~~~~~~~~~",
-           Homework.TaskB5.Frame(new List<string>() { "Small", "text", "frame" }, '~'), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => Assert.AreEqual("------------------------------------\n- This is a very long single frame -\n------------------------------------",
-            Homework.TaskB5.Frame(new List<string>() { "This is a very long single frame" }, '-'), "TEST ERROR");
     }
 }

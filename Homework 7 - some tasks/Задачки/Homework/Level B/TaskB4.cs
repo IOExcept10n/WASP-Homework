@@ -16,32 +16,71 @@ namespace Homework
     // Примеры:
     // CheckBrackets("(abc)[]{0:1}") ==> true;
     // CheckBrackets("(abc)]{0:1}[") ==> false.
-    [TestClass]
     public static class TaskB4
     {
         public static bool CheckBrackets(string s)
         {
             // Здесь необходимо написать код.
-
+            Stack<Bracket> bracketsStructure = new Stack<Bracket>();
+            foreach (char c in s)
+            {
+                switch (c)
+                {
+                    case '(':
+                        bracketsStructure.Push(Bracket.Round);
+                        break;
+                    case '{':
+                        bracketsStructure.Push(Bracket.Curly);
+                        break;
+                    case '[':
+                        bracketsStructure.Push(Bracket.Square);
+                        break;
+                    case '<':
+                        bracketsStructure.Push(Bracket.Triangle);
+                        break;
+                    case ')':
+                        if (bracketsStructure.Count == 0 || bracketsStructure.Pop() != Bracket.Round) return false;
+                        break;
+                    case '}':
+                        if (bracketsStructure.Count == 0 || bracketsStructure.Pop() != Bracket.Curly) return false;
+                        break;
+                    case ']':
+                        if (bracketsStructure.Count == 0 || bracketsStructure.Pop() != Bracket.Square) return false;
+                        break;
+                    case '>':
+                        if (bracketsStructure.Count == 0 || bracketsStructure.Pop() != Bracket.Triangle) return false;
+                        break;
+                }
+            }
+            if (bracketsStructure.Count == 0) return true;
             return false;
         }
-
-        [TestMethod]
-        public static void Test1() => Assert.IsTrue(Homework.TaskB4.CheckBrackets("(5+5)/[4+4]*{2*2}"), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test2() => Assert.IsFalse(Homework.TaskB4.CheckBrackets("(3+[2*3)]"), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test3() => Assert.IsTrue(Homework.TaskB4.CheckBrackets("[{([[[<>]]])(<>)(){}}]"), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test4() => Assert.IsFalse(Homework.TaskB4.CheckBrackets("]()(){<>}[[()]]"), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test5() => Assert.IsTrue(Homework.TaskB4.CheckBrackets("[(sjd),\"2\"],{2:3}, [<>]"), "TEST ERROR");
-
-        [TestMethod]
-        public static void Test6() => Assert.IsFalse(Homework.TaskB4.CheckBrackets("{[[[[((()))]]<]>]}"), "TEST ERROR");
+        /// <summary>
+        /// Введу перечисление для скобочек, чтобы определять, какая из скобок открыта.
+        /// </summary>
+        //[Flags]
+        public enum Bracket
+        {
+            /// <summary>
+            /// Отсутствие каких-либо скобок.
+            /// </summary>
+            None = 0,
+            /// <summary>
+            /// Круглая скобка.
+            /// </summary>
+            Round = 1,
+            /// <summary>
+            /// Фигурная скобка.
+            /// </summary>
+            Curly = 2,
+            /// <summary>
+            /// Квадратная скобка.
+            /// </summary>
+            Square = 4,
+            /// <summary>
+            /// Треугольная скобка (не знаю, как на самом деле называется).
+            /// </summary>
+            Triangle = 8
+        }
     }
 }
