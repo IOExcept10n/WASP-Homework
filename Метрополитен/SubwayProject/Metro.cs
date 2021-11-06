@@ -6,61 +6,57 @@ using System.Threading.Tasks;
 
 namespace SubwayProject
 {
-    /// <summary>
-    /// Класс, представляющий метро какого-либо города.
-    /// </summary>
+
+    // Класс, представляющий метро какого-либо города.
+
     public class Metro
     {
-        //Поля класса
-        /// <summary>
-        /// Список веток данного метро.
-        /// </summary>
+        //=======Поля класса=========
+
+        // Список веток данного метро.
+
         List<Line> lines;
 
-        /// <summary>
-        /// Название города, в котром находится метро.
-        /// </summary>
+
+        // Название города, в котром находится метро.
+
         string city;
 
-        //Конструктор
-        /// <summary>
-        /// Создаёт новое метро с указанным названием города.
-        /// </summary>
+        //=======Конструктор========
+
+        // Создаёт новое метро с указанным названием города.
+
         public Metro(string city)
         {
             this.city = city;
         }
 
-        //Методы
-        /// <summary>
-        /// Получает название города, в котором находится это метро.
-        /// </summary>
+        //=========Методы========
+
+        // Получает название города, в котором находится это метро.
+
         public string GetCity() => city;
 
-        /// <summary>
-        /// Добавляет ветку в метро.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="color"></param>
+
+        // Добавляет ветку в метро.
+
         public void AddLine(string name, string color)
         {
             lines.Add(new Line(name, color));
         }
 
-        /// <summary>
-        /// Удаляет ветку по указанному имени.
-        /// </summary>
+
+        // Удаляет ветку по указанному имени.
+
         public void RemoveLine(string name)
         {
             lines.Remove(lines.First(x => x.GetName() == name));//Удаляем первый элемент списка, имя котрого равно аргументу.
         }
 
         //Методы ниже не требовалось заполнять, но я увлёкся и сделал 2 случайно. Оставшиеся 2 я пока что оставил пустыми.
-        /// <summary>
-        /// Находит станции с указанным именем
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns>Список найденных станций на всех ветках.</returns>
+
+        // Находит станции с указанным именем
+
         public List<Station> FindStation(string name)
         {
             List<Station> foundResults = new List<Station>();//Создаём список тех станций, которые мы нашли.
@@ -72,12 +68,9 @@ namespace SubwayProject
             return foundResults;//Возвращаем получившийся список.
         }
 
-        /// <summary>
-        /// Находит станцию с указанным именем в указанной ветке.
-        /// </summary>
-        /// <param name="name">Имя станции.</param>
-        /// <param name="lineName">Имя ветки</param>
-        /// <returns></returns>
+
+        // Находит станцию с указанным именем в указанной ветке.
+
         public Station FindStation(string name, string lineName)
         {
             return lines.First(x => x.GetName() == lineName).GetStation(name);//Получаем первую ветку, имя которой равно искомому, затем ищем в ней станцию, имя которой равно заданному.
@@ -85,7 +78,7 @@ namespace SubwayProject
 
         public List<Station> GetStationList()
         {
-            throw new NotImplementedException();//Выбрасываем исключение, чтобы показать, что метод нереализован. Вдобавок, это избавить нас от ошибки при компиляции.
+            throw new NotImplementedException();//Выбрасываем исключение, чтобы показать, что метод нереализован. Вдобавок, это избавит нас от ошибки при компиляции.
         }
 
         public void LoadStatonsFromFile(string filename)
