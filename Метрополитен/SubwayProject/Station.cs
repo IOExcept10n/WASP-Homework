@@ -11,68 +11,72 @@ namespace SubwayProject
     {
         //Это всё поля класса
         //Поле, обозначающее имя станции
-        string name;
+        protected string name;
 
         //Поле, обозначающее цвет
-        string color;
+        protected ConsoleColor color;
 
         //Поле, обозначающее линию, на которой находится станция.
-        Line line;
+        protected internal Line line;
 
         //Поле, обозначающее доступ к станции для инвалидов-колясочников
-        bool isWheelChairAccessible;
+        protected bool isWheelChairAccessible;
 
         //Поле, обозначающее, есть ли рядом парковка (вроде бы)
-        bool hasParkAndRide;
+        protected bool hasParkAndRide;
 
         //Поле, обозначающее, есть ли рядом возможность зарядить электромобиль
-        bool hasNearbyCableCar;
+        protected bool hasNearbyCableCar;
 
         //Поле, хранящее список станций, в которые можно приехать из данной
-        List<Station> transfers = new List<Station>();//Сразу добавлю инициализатор в месте объявления станции.
+        protected List<Station> transfers = new();//Сразу добавлю инициализатор в месте объявления станции.
 
         //Дальше идут 2 конструктора
         //Первый конструктор создаёт новую станцию с указанным цветом и названием.
         //name - название, color - цвет
-        public Station(string name, string color)
+        public Station(string name, ConsoleColor color, params string[] info)
         {
             this.name = name;//задаём имя станции.
             this.color = color;//задаём цвет станции.
+            if (info.Length > 0) IsWheelChairAccessible = Convert.ToBoolean(info[0]);//Если есть хотя бы 1 элемент в info, присваиваем значение iswheelchairaccessible
+            if (info.Length > 1) HasParkAndRide = Convert.ToBoolean(info[1]);//Если больше одного, присваиваем следующему свойству
+            if (info.Length > 2) hasNearbyCableCar = Convert.ToBoolean(info[2]);//Если больше двух, присваиваем последнему свойству.
         }
 
         //Второй конструктор создаёт новую станцию с указанным именем, цветом и списком станций, в которые можно приехать.
         //name - Название станции
         //color - Цвет станции
         //transfer - Список доступных веток.
-        public Station(string name, string color, List<Station> transfer)
+        public Station(string name, ConsoleColor color, List<Station> transfer, params string[] info) : this(name, color, info)//Делаем то же самое, что и в другом конструкторе.
         {
-            this.name = name;//Задаём полю name значение параметра name.
-            this.color = color;//Задаём значение полю color
             transfers = transfer;//Задаём значение полю transfers
         }
         /*
          * По сути, запись => заменяет {}, но работает только в 1 строчку. Для удобства я буду использовать её
          * */
-        //Этот метод получает имя станции.
-        public string GetName() => name;
+        //Свойство, указывающее имя станции. 
+        public string Name { get => name; set => name = value; }
 
-        //Метод, задаёт новое имя станции.
-        public void SetName(string name) => this.name = name;
+        //Свойство, определяющее, есть ли доступ к станции для людей с коляской.
+        public bool IsWheelChairAccessible { get => isWheelChairAccessible; set => isWheelChairAccessible = value; }
+        //Свойство, получающее цвет станции. Нужно для красивого вывода в задании.
+        public ConsoleColor Color { get => color; }
+        // Свойство, определяющее, есть ли рядом парковка
+        public bool HasParkAndRide { get => hasParkAndRide; set => hasParkAndRide = value; }
 
-        //Метод, определяющий, есть ли доступ к станции для людей с коляской.
-        public bool IsWheelchairAccessible() => isWheelChairAccessible;
+        // Свойство, определяет, есть ли рядом место для зарядки элетромобилей.
+        public bool HasNearbyCableCar { get => hasNearbyCableCar; set => hasNearbyCableCar = value; }
 
-        
-        // Метод, определяющий, есть ли рядом парковка
-        public bool HasParkAndRide() => hasParkAndRide;
+        // Свойство LineName возвращает имя ветки.
+        public string LineName { get => line.Name; }//Получаем имя ветки данной станции и возвращаем его.
 
-        // Метод, определяет, есть ли рядом место для зарядки элетромобилей.
-        public bool HasNearbyCableCar() => hasNearbyCableCar;
+        // Свойство, возвращает список станций, доступных с этой станции.
+        public List<Station> TransferList => transfers;//Возвращаем список доступных станций. 
 
-        // Метод GetLineName возвращает имя ветки.
-        public string GetLineName() => line.GetName();//Получаем имя ветки данной станции и возвращаем его.
-
-        // Метод, возвращает список станций, доступных с этой станции.
-        public List<Station> GetTransferList() => transfers;//Возвращаем список доступных станций.
+        public override string ToString()
+        {
+            /*wheel access: {isWheelChairAccessible}, park: {hasParkAndRide}, cable car: {HasNearbyCableCar}*/
+            return $"[{Name}, transit length: {transfers.Count}]";
+        }
     }
 }

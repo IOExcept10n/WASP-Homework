@@ -12,7 +12,7 @@ namespace SubwayProject
     public class Line
     {
         //Поля класса
-        //Поле, хранящее писок станций на этой ветке.
+        //Поле, хранящее cписок станций на этой ветке.
         List<Station> stations;
 
         
@@ -23,55 +23,43 @@ namespace SubwayProject
         
         //Поле, хранящее цвет этой ветки.
         
-        string color;
+        ConsoleColor color;
 
         //Конструктор
         // Создаёт новую ветку с указанным именем и цветом.
         //name - имя, color - цвет
-        public Line(string name, string color)
+        public Line(string name, ConsoleColor color)
         {
             stations = new List<Station>();
             this.name = name;
             this.color = color;
         }
 
+        // Свойство, предоставляющее доступ к имени
+        public string Name { get => name; set => name = value; }
+
+        //Свойство, предоставляющее доступ к цвету.
+        public ConsoleColor Color { get => color; set => color = value; }
+
         //======Методы класса========
 
 
         //Получает станцию по указанному имени.
-        public Station GetStation(string name) => stations.FirstOrDefault(x => x.GetName() == name);//Получаем первый элемент списка, имя которого совпадает с аргументом метода. FirstOrDefault возвращает null, если целевой объект не найден, а это как раз то, что нужно.
-
-        
-        // Получает имя ветки.
-        public string GetName() => name;
-
-        
-        // Задаёт имя ветки.
-        public void SetName(string name) => this.name = name;
-
-        
-        // Получает цвет ветки.
-        public string GetColor() => color;
-
-        
-        // Задаёт цвет ветки.
-        
-        public void SetColor(string color) => this.color = color;
-
+        public Station GetStation(string name) => stations.FirstOrDefault(x => x.Name == name);//Получаем первый элемент списка, имя которого совпадает с аргументом метода. FirstOrDefault возвращает null, если целевой объект не найден, а это как раз то, что нужно.
         
         // Добавляет новую станцию к ветке.
         
-        public void AddStation(string name, string color)
+        public void AddStation(string name, ConsoleColor color)
         {
-            stations.Add(new Station(name, color));//Добавляем новую станцию в список.
+            stations.Add(new Station(name, color) { line = this });//Добавляем новую станцию в список.
         }
 
         
         // Добавляет новую станцию к ветке.
         
-        public void AddStation(string name, string color, List<Station> transfers)
+        public void AddStation(string name, ConsoleColor color, List<Station> transfers)
         {
-            stations.Add(new Station(name, color, transfers));//аналогично альтернативной перегрузке.
+            stations.Add(new Station(name, color, transfers) { line = this });//аналогично альтернативной перегрузке.
         }
 
         
@@ -79,7 +67,7 @@ namespace SubwayProject
         
         public void RemoveStation(string name)
         {
-            stations.Remove(stations.First(x => x.GetName() == name));//Здесь не буду делать черещ firstordefault, потому что в случае, если не будет найден элемент, исключение выбросит 100%.
+            stations.Remove(stations.First(x => x.Name == name));//Здесь не буду делать через firstordefault, потому что в случае, если не будет найден элемент, исключение выбросит 100%.
             //В общем, удаляю из списка первый элемент, удовлетворяющий условию.
         }
 
@@ -91,11 +79,21 @@ namespace SubwayProject
             return GetStation(name);
         }
 
+        public virtual void PrintLine()
+        {
+            Console.ForegroundColor = Color;
+            string ret = $"Name: \'{Name}\'; Stations: \n";
+            stations.ForEach(x => ret += $" --- {x};\n");
+            Console.WriteLine(ret);
+            Console.ResetColor();
+        }
         
         // Находит список станций, доступных из станции по указанному имени.
         public List<Station> GetStationList(string name)
         {
-            return GetStation(name).GetTransferList();//Получаем трансферный список станции по заданному имени.
+            return GetStation(name).TransferList;//Получаем трансферный список станции по заданному имени.
         }
+        //Метод, возвращает список всех станций данной линии.
+        public List<Station> GetStationList() => stations;
     }
 }

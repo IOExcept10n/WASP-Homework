@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SubwayProject
 {
@@ -28,19 +27,20 @@ namespace SubwayProject
 
         public Metro(string city)
         {
+            lines = new();
             this.city = city;
         }
 
         //=========Методы========
 
-        // Получает название города, в котором находится это метро.
+        // Свойство, получает название города, в котором находится это метро.
 
-        public string GetCity() => city;
+        public string City => city;
 
 
         // Добавляет ветку в метро.
 
-        public void AddLine(string name, string color)
+        public void AddLine(string name, ConsoleColor color)
         {
             lines.Add(new Line(name, color));
         }
@@ -50,7 +50,7 @@ namespace SubwayProject
 
         public void RemoveLine(string name)
         {
-            lines.Remove(lines.First(x => x.GetName() == name));//Удаляем первый элемент списка, имя котрого равно аргументу.
+            lines.Remove(lines.First(x => x.Name == name));//Удаляем первый элемент списка, имя котрого равно аргументу.
         }
 
         //Методы ниже не требовалось заполнять, но я увлёкся и сделал 2 случайно. Оставшиеся 2 я пока что оставил пустыми.
@@ -59,7 +59,7 @@ namespace SubwayProject
 
         public List<Station> FindStation(string name)
         {
-            List<Station> foundResults = new List<Station>();//Создаём список тех станций, которые мы нашли.
+            List<Station> foundResults = new();//Создаём список тех станций, которые мы нашли.
             foreach (Line line in lines)//Циклом проходим по всем веткам
             {
                 Station result = line.GetStation(name);//Пытаемся найти станцию по имени в ветке.
@@ -73,17 +73,69 @@ namespace SubwayProject
 
         public Station FindStation(string name, string lineName)
         {
-            return lines.First(x => x.GetName() == lineName).GetStation(name);//Получаем первую ветку, имя которой равно искомому, затем ищем в ней станцию, имя которой равно заданному.
+            return lines.FirstOrDefault(x => x.Name == lineName)?.GetStation(name);//Получаем первую ветку, имя которой равно искомому, затем ищем в ней станцию, имя которой равно заданному.
         }
-
-        public List<Station> GetStationList()
-        {
-            throw new NotImplementedException();//Выбрасываем исключение, чтобы показать, что метод нереализован. Вдобавок, это избавит нас от ошибки при компиляции.
-        }
-
+        //Метод, возвращающий список всех станций.
+        public List<Station> GetStationList(string line) => lines.First(x => x.Name == line).GetStationList();//Выбрасываем исключение, чтобы показать, что метод нереализован. Вдобавок, это избавит нас от ошибки при компиляции.
+        //Метод, осуществляющий загрузку данных о метро из файла.
         public void LoadStatonsFromFile(string filename)
         {
-            
+            StreamReader sr = new(filename);//Создаём считывающий поток для указанного файла.
+            string line;//Переменная, в которой будем хранить строчку файла.
+            while ((line = sr.ReadLine()) != null)//До тех пор, пока файл не закончится:
+            {
+                string[] columns = line.Split(';');//Разделяем строку на колонки по разделителю
+                string lineId = columns[0];//Получаем название ветки в первой колонке.
+                TryMakeLine(lineId);//Переходим ко вспомогательному методу, чтобы сделать ветку, если её ещё нет
+                string stationName = columns[1];//Имя станции во второй колонке.
+                string[] transfers = columns[2].Split(',');//Список доступных из неё станций со своими ветками из третьей колонки.
+                List<Station> transferList = new();//Создаём переменную-список доступных станций для дальнейшего формирования.
+                if (!(transfers.Length == 1 && transfers[0] == ""))
+                    foreach (var c in transfers)//Для каждой доступной станции:
+                    {
+                        string tLineId = c.Split('-')[0];//Первым значением является название линии
+                        TryMakeLine(tLineId);//Пытаемся сделать её, если таковой ещё нет.
+                        string tStationName = c.Split('-')[1];//Вторым значением идёт имя станции
+                        if (FindStation(tStationName, tLineId) == null)//Тут мы создаём её, если её ещё нет.
+                        {
+                            var found = lines.First(x => x.Name == tLineId);
+                            found.AddStation(tStationName, found.Color);
+                        }
+                        transferList.Add(FindStation(tStationName, tLineId));//Теперь эта станция точно есть, поэтому мы можем добавить её в этот список.
+                    }
+                Station station = FindStation(stationName, lineId);//Проверяем, была ли станция создана ранее.
+                if (station == null)//Если нет, то создаём её.
+                {
+                    Line currentLine = lines.First(x => x.Name == lineId);
+                    currentLine.AddStation(stationName, currentLine.Color, transferList);
+                }
+                else station.TransferList.AddRange(transferList);//Если да, то просто добавляем список доступных станций.
+            }
+            sr.Close();
+        }
+        //Метод, осуществляющий создание ветки из названия, если этой ветки ещё нет.
+        //Возврат: true, если ветки не было, false, если была.
+        private bool TryMakeLine(string lineId)
+        {
+            if (!lines.Any(x => x.Name == lineId))//Если ветки нет в списке:
+            {
+                ConsoleColor color;
+                if (int.TryParse(lineId, out int iLineId) && iLineId <= 15)//Задаём цвет по номеру, если это возможно (если в названии число и оно не больше 15)
+                {
+                    color = (ConsoleColor)iLineId;
+                }
+                else color = ConsoleColor.White;
+                AddLine(lineId, color);//Создаём ветку и добавляем её.
+                return true;
+            }
+            return false;
+        }
+        //Вспомогательное свойство для получения списка линий, а то я не смогу их иначе вывести.
+        public List<Line> Lines => lines;
+
+        public override string ToString()
+        {
+            return $"{City} : {lines.Count} lines";
         }
     }
 }

@@ -1,0 +1,16 @@
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\SubwayProject.exe
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\SubwayProject.deps.json
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\SubwayProject.runtimeconfig.json
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\SubwayProject.runtimeconfig.dev.json
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\SubwayProject.dll
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\ref\SubwayProject.dll
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\bin\Debug\net5.0\SubwayProject.pdb
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.csprojAssemblyReference.cache
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.AssemblyInfoInputs.cache
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.AssemblyInfo.cs
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.csproj.CoreCompileInputs.cache
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.dll
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\ref\SubwayProject.dll
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.pdb
+C:\Users\ivano\source\repos\Homework\Метрополитен\SubwayProject\obj\Debug\net5.0\SubwayProject.genruntimeconfig.cache
