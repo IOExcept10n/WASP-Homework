@@ -20,11 +20,13 @@ namespace SubwayProject
                 "Вывести станции по названию",
                 "Вывести станцию по названию станции и ветки",
                 "Вывести все станции определёной ветки",
+                "Построить маршрут между станциями",
                 "Выйти из программы"
             };
             bool action = true;//Создаём переменную-флаг для выхода из цикла.
             while (action)//Псевдобесконечный цикл для выполнения действий программы.
             {
+                metro.InitPreviousNextPoint();
                 int currentMenuItem = 0;//Переменная для хранения выбранного элемента меню. 
                 ConsoleKeyInfo input;//Переменная для хранения клавиши, которую нажмёт пользователь.
                 do//Цикл для работы меню:
@@ -107,7 +109,50 @@ namespace SubwayProject
                             }
                             break;
                         }
-                    case 4://Пятый пункт, выход из цикла.
+                    case 4:
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;//Синий цвет ввода
+                            Console.Write("Введите название станции отправления: ");//Просим ввыести название
+                            string name = Console.ReadLine();//Сохраняем в переменную
+                            Console.Write("Введите название ветки со станцией отправления: ");//Просим ввести название ветки
+                            string line = Console.ReadLine();//Сохраняем в переменную
+                            Station start = metro.FindStation(name, line);//Ищем результат
+                            if (start == null)//Проверяем правильность ввода.
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Ошибка: введены неверные данные. Попробуйте написать станции заново.");
+                                break;
+                            }
+                            Console.ForegroundColor = ConsoleColor.Blue;//Синий цвет ввода
+                            Console.Write("Введите название станции назначения: ");//Просим ввыести название
+                            name = Console.ReadLine();//Сохраняем в переменную
+                            Console.Write("Введите название ветки со станцией назначения: ");//Просим ввести название ветки
+                            line = Console.ReadLine();//Сохраняем в переменную
+                            Station end = metro.FindStation(name, line);//Ищем результат
+                            if (end == null)//Проверяем правильность ввода.
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Ошибка: введены неверные данные. Попробуйте написать станции заново.");
+                                break;
+                            }
+                            List<Station> route = Metro.GetRoute(metro, start, end, new List<Station>());//Получаем маршрут через специализированный метод.
+                            if (route != null)//Если маршрут найден:
+                            {
+                                Console.WriteLine("Полученный маршрут: ");
+                                foreach (Station s in route)//Форматированно выводим маршрут.
+                                {
+                                    Console.ForegroundColor = s.Color;
+                                    Console.WriteLine($"-> {s.Name}, Line: {s.LineName}");
+                                }
+                            }
+                            else//Если вдруг маршрут не найден (на всякий случай):
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Ошибка: из данной станции невозможно попасть в указанную! (Правда верится в это с трудом)");
+                            }
+                            break;
+                        }
+                    case 5://Шестой пункт, выход из цикла.
                         {
                             action = false;
                             break;

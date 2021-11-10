@@ -131,7 +131,53 @@ namespace SubwayProject
             return false;
         }
         //Вспомогательное свойство для получения списка линий, а то я не смогу их иначе вывести.
-        public List<Line> Lines => lines;
+        public List<Line> Lines => new(lines);//Создаю новый список, чтобы нельзя было изменить внутреннее поле.
+        //Метод для установки значений для построения маршрутов.
+        public void InitPreviousNextPoint()
+        {
+            Station old;//Перменная для предыдущей станции.
+            foreach (Line line in lines)//Для каждой ветки:
+            {
+                old = null;//Обнуляем предыдущую станцию
+                foreach (Station station in line.GetStationList())//Для каждой станции на ветке
+                {
+                    station.Previous = old;//Задаём предыдущую
+                    if (old != null) old.Next = station;//Задаём предыдущей эту в качестве следующей
+                    station.Visited = false;//Задаём Visited в false.
+                    old = station;//Теперь предыдущей станет эта
+                }
+            }
+        }
+        //Метод для вычисления оптимального маршрута
+        //Параметры:
+        //metro - метро, которое на самом деле в методе не используется, но нужно по заданию.
+        //current - текущая станция, с которой начинать строить маршрут.
+        //target - станция назначения
+        //route - уже построенный до этого маршрут (используется при рекурсии для построения маршрута).
+        //minCount - Максимальная длина маршрута. Если более короткого не было найдено, метод вернёт null. -1 означает, что ограничений нет.
+        public static List<Station> GetRoute(Metro metro, Station current, Station target, List<Station> route, int lengthLimit = -1)
+        {
+            route.Add(current);//Добавляем станцию в маршрут
+            current.Visited = true;//Помечаем её как посещённую (хотя я не использовал это свойство, но всё же).
+            if (lengthLimit != -1 && route.Count > lengthLimit) return null;//Если мы достигли лимита по длине, то искать смысла больше нет.
+            if (current == target)//Если мы прибыли в место назначения, то возвращаем маршрут
+            {
+                return route;
+            }
+            List<Station> minRoute = null;//Данный список будет кратчайшим маршрутом среди всех доступных из этой станции
+            foreach (var way in current.TransferList + current.Next + current.Previous)//Для каждого из выходов со станции (для пересадки, следующая станция и предыдущая):
+            {
+                if (!(way == null || route.Contains(way)))//Если эта станция вообще есть и её ещё не было на маршруте:
+                {
+                    List<Station> newRoute = GetRoute(metro, way, target, new List<Station>(route), minRoute?.Count ?? lengthLimit);//Производим расчёт маршрута для неё с учётом того, что лимитом будет минимальный, найденный до этого.
+                    if (newRoute != null && (minRoute == null || newRoute.Count < minRoute.Count))//Если такой маршрут найден и он короче оптимального/ни одного маршрута ещё нет, 
+                    {
+                        minRoute = newRoute;//Назначаем его как оптимальный
+                    }
+                }
+            }
+            return minRoute;//Возвращаем оптимальный маршрут.
+        }
 
         public override string ToString()
         {

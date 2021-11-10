@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SubwayProject
 {
     //Класс станции метро.
-    public class Station
+    public class Station : IPoint
     {
         //Это всё поля класса
         //Поле, обозначающее имя станции
@@ -28,7 +28,7 @@ namespace SubwayProject
         //Поле, обозначающее, есть ли рядом возможность зарядить электромобиль
         protected bool hasNearbyCableCar;
 
-        //Поле, хранящее список станций, в которые можно приехать из данной
+        //Поле, хранящее список станций, в которые можно пересесть из данной
         protected List<Station> transfers = new();//Сразу добавлю инициализатор в месте объявления станции.
 
         //Дальше идут 2 конструктора
@@ -70,13 +70,31 @@ namespace SubwayProject
         // Свойство LineName возвращает имя ветки.
         public string LineName { get => line.Name; }//Получаем имя ветки данной станции и возвращаем его.
 
-        // Свойство, возвращает список станций, доступных с этой станции.
+
+
+        // Свойство, возвращает список станций, доступных для пересадки с этой станции.
         public List<Station> TransferList => transfers;//Возвращаем список доступных станций. 
+        //Автосвойство для хранения следующей станции
+        public Station Next { get; set; }
+        //Автосвойство для хранения предыдущей станции
+        public Station Previous { get; set; }
+        //Автосвойство для определения, использовалась ли данная станция для построения маршрута. Для построения маршрута я его, правда, так и не использовал
+        public bool Visited { get; set; }
 
         public override string ToString()
         {
             /*wheel access: {isWheelChairAccessible}, park: {hasParkAndRide}, cable car: {HasNearbyCableCar}*/
             return $"[{Name}, transit length: {transfers.Count}]";
+        }
+
+        public static List<Station> operator +(Station left, Station right)
+        {
+            return new List<Station>() { left, right };
+        }
+
+        public static List<Station> operator +(List<Station> left, Station right)
+        {
+            return new List<Station>(left) { right };//Новый список на базе старого + ещё один элемент.
         }
     }
 }
