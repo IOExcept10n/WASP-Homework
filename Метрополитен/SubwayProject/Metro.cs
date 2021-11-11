@@ -111,6 +111,7 @@ namespace SubwayProject
                 }
                 else station.TransferList.AddRange(transferList);//Если да, то просто добавляем список доступных станций.
             }
+            lines.Sort((x, y) => string.Compare(x.Name, y.Name));//Отсортируем ветки по именам
             sr.Close();
         }
         //Метод, осуществляющий создание ветки из названия, если этой ветки ещё нет.
