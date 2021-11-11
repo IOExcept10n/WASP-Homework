@@ -111,9 +111,19 @@ namespace SubwayProject
                 }
                 else station.TransferList.AddRange(transferList);//Если да, то просто добавляем список доступных станций.
             }
-            lines.Sort((x, y) => string.Compare(x.Name, y.Name));//Отсортируем ветки по именам
+            lines.Sort(CompareLines);//Отсортируем ветки по именам
             sr.Close();
         }
+        //Метод для сортировки списка веток
+        private int CompareLines(Line l1, Line l2)
+        {
+            if (int.TryParse(l1.Name, out int c1) && int.TryParse(l2.Name, out int c2) || int.TryParse(l1.Name[..^1], out c1) && int.TryParse(l2.Name[..^1], out c2) || int.TryParse(l1.Name, out c1) && int.TryParse(l2.Name[..^1], out c2) || int.TryParse(l1.Name[..^1], out c1) && int.TryParse(l2.Name, out c2))//Сначала проверяем, можно ли спрасить всю строку, потом всю, кроме последнего символа. Перебираем все 4 возможных варианта сравнения
+            {
+                return c1.CompareTo(c2);//Если хоть один получился, то сравниваем.
+            }
+            return string.Compare(l1.Name, l2.Name);//Если нельзя привести к числу, то сравниваем как строки.
+        }
+
         //Метод, осуществляющий создание ветки из названия, если этой ветки ещё нет.
         //Возврат: true, если ветки не было, false, если была.
         private bool TryMakeLine(string lineId)
