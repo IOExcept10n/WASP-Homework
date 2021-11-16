@@ -49,7 +49,7 @@ namespace SubwayProject
         //transfer - Список доступных веток.
         public Station(string name, ConsoleColor color, List<Station> transfer, params string[] info) : this(name, color, info)//Делаем то же самое, что и в другом конструкторе.
         {
-            transfers = transfer;//Задаём значение полю transfers
+            transfers = new(transfer);//Задаём значение полю transfers
         }
         /*
          * По сути, запись => заменяет {}, но работает только в 1 строчку. Для удобства я буду использовать её
@@ -73,7 +73,7 @@ namespace SubwayProject
 
 
         // Свойство, возвращает список станций, доступных для пересадки с этой станции.
-        public List<Station> TransferList => transfers;//Возвращаем список доступных станций. 
+        public List<Station> TransferList => new(transfers);//Возвращаем список доступных станций. 
         //Автосвойство для хранения следующей станции
         public Station Next { get; set; }
         //Автосвойство для хранения предыдущей станции
