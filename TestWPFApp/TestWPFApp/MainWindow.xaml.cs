@@ -41,6 +41,8 @@ namespace TestWPFApp
             btn.MouseEnter += RunAway;
             btn.Click += Congratulate;//Первоначальной идеей названия было "ShowHowImShockedThatWowImpossibleHowDidYouClickedThisButton"
             btn.Width = 100; btn.Height = 40;
+            btn.VerticalAlignment = VerticalAlignment.Top;
+            btn.HorizontalAlignment = HorizontalAlignment.Left;
             Field.Children.Add(btn);
         }
 
