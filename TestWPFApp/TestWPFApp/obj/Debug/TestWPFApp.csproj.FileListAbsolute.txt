@@ -1,0 +1,16 @@
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\bin\Debug\TestWPFApp.exe.config
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\bin\Debug\TestWPFApp.exe
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\bin\Debug\TestWPFApp.pdb
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.csproj.AssemblyReference.cache
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.csproj.SuggestedBindingRedirects.cache
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\MainWindow.g.cs
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\App.g.cs
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp_MarkupCompile.cache
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp_MarkupCompile.lref
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\MainWindow.baml
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.g.resources
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.Properties.Resources.resources
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.csproj.GenerateResource.cache
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.csproj.CoreCompileInputs.cache
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.exe
+C:\Users\ivano\source\repos\TestWPFApp\TestWPFApp\obj\Debug\TestWPFApp.pdb
