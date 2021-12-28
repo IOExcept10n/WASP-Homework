@@ -132,7 +132,7 @@ namespace TestWPFApp
             grid.Children.Add(down);
         }
 
-        public RoutedEvent ValueChange = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(NumberBox));
+        public readonly RoutedEvent ValueChange = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(NumberBox));
 
         public event RoutedEventHandler ValueChanged
         {
