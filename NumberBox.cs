@@ -12,8 +12,8 @@ namespace TestWPFApp
     public class NumberBox : UIElement
     {
         private TextBox textBox = new TextBox();
-        private Button up = new Button();
-        private Button down = new Button();
+        private Button up = new Button() { Content = "+"};
+        private Button down = new Button() { Content = "-" };
         private double height;
         private double width;
         private int value;
@@ -38,7 +38,7 @@ namespace TestWPFApp
             set
             {
                 height = value;
-                textBox.Height = up.Height = down.Height = value;
+                textBox.Height = value; up.Height = down.Height = value / 2;
             }
         }
 
@@ -48,8 +48,8 @@ namespace TestWPFApp
             set
             {
                 width = value;
-                textBox.Width = value / 2;
-                up.Width = down.Width = value / 4;
+                textBox.Width = value / 3 * 2;
+                up.Width = down.Width = value / 3;
             }
         }
 
@@ -59,11 +59,11 @@ namespace TestWPFApp
             set
             {
                 margin = value;
-                value.Left -= width / 2;
                 textBox.Margin = value;
-                value.Left += textBox.Width;
+                value.Left += textBox.Width + up.Width;
+                value.Top -= up.Height;
                 up.Margin = value;
-                value.Left += up.Width;
+                value.Top += up.Height + down.Height;
                 down.Margin = value;
             }
         }
