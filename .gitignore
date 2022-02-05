@@ -206,4 +206,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 #Something for Unity
-*/[Aa]rtifacts/*
+*[Aa]rtifacts*
