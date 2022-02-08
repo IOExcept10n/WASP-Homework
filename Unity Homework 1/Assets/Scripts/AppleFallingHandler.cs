@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AppleFallingHandler : MonoBehaviour
@@ -7,6 +8,8 @@ public class AppleFallingHandler : MonoBehaviour
     public float BottomLimit = -10f;
 
     public GameObject BowlPrefab;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -19,19 +22,16 @@ public class AppleFallingHandler : MonoBehaviour
     {
         if (transform.position.y < BottomLimit)
         {
-            var bowls = GameObject.FindGameObjectsWithTag("Bowl");
-            var apples = GameObject.FindGameObjectsWithTag("Apple");
-            foreach (var apple in apples) Destroy(apple);
-            if (bowls != null && bowls.Length > 1)
+            foreach (var apple in TreeBehaviour.Apples) Destroy(apple);
+            TreeBehaviour.Apples.Clear();
+            var bowl = TreeBehaviour.Bowls.Last();
+            Destroy(bowl);
+            TreeBehaviour.Bowls.Remove(bowl);
+            if (TreeBehaviour.Bowls.All(x => x == null))
             {
-                Destroy(bowls[0]);
-            }
-            else
-            {
-                Destroy(bowls[0]);
                 for (int i = 0; i < 3; i++)
                 {
-                    Instantiate(BowlPrefab);
+                    TreeBehaviour.Bowls.Add(Instantiate(BowlPrefab));
                 }
             }
         }
